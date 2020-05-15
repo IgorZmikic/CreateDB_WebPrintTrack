@@ -1,20 +1,21 @@
+--komentar
 create database WebPrintTrackDB;
 use WebPrintTrackDB;
 
 Create table Korisnik
 (
-IDKorisnik int identity(1,1) -- ovo kaûe da se kreÊe od 1 i indeksi novog zapisa kreiraju svaki put u koracima od 1 (5,6,7,...)
-	Constraint PK_Korisnik Primary key (IDKorisnik), -- pazi da nema zareza izmeu Constraint i deklaracije IDKorisnik int...
+IDKorisnik int identity(1,1) -- ovo ka≈æe da se kre√¶e od 1 i indeksi novog zapisa kreiraju svaki put u koracima od 1 (5,6,7,...)
+	Constraint PK_Korisnik Primary key (IDKorisnik), -- pazi da nema zareza izme√∞u Constraint i deklaracije IDKorisnik int...
 Naziv NVARCHAR(100) not null,
-Lokacija NVARCHAR(100) not null, -- ?? moûda Êe trebati neki drugi tip podataka (GPS,...)
+Lokacija NVARCHAR(100) not null, -- ?? mo≈æda √¶e trebati neki drugi tip podataka (GPS,...)
 AdresaUlica NVARCHAR(100) not null,
 AdresaKBroj NVARCHAR(100) not null,
 AdresaPostBroj NVARCHAR(100) not null
 );
 /*
-InaËe, moglo bi skraÊeno ovako 
+Ina√®e, moglo bi skra√¶eno ovako 
     IDKorisnik int PRIMARY KEY
-ali onda bi primary key imao neko generiËko ime
+ali onda bi primary key imao neko generi√®ko ime
 
 */
 create table KontaktOsoba
@@ -24,7 +25,7 @@ KorisnikID int
 -- dodajem foreign key...
 --             njegovo_ime              polje u tbl.           strana_tablica(polje_u_stranoj_tablici)
     Constraint FK_Korisnik Foreign key (KorisnikID) references Korisnik(IDKorisnik)
-, -- pazi na poloûaj zereza jer izmeu dijela deklaracije KorisnikID i kljuËne rijeËi Constraint NE SMIJE(!) biti zarez
+, -- pazi na polo≈æaj zereza jer izme√∞u dijela deklaracije KorisnikID i klju√®ne rije√®i Constraint NE SMIJE(!) biti zarez
 Ime nvarchar(100) not null,
 Prezime nvarchar(100) not null,
 Email nvarchar(100) not null,
@@ -43,8 +44,8 @@ IDNarudzba int identity(1,1),
 KorisnikID int
    Constraint FK_KorisnikNar foreign key (KorisnikID) References Korisnik(IDKorisnik)
 , 
-KontaktID int null, -- ovako Êe moÊi biti ako Kontakt osoba nije obavezna, ne znam kako smo dogovarali!
-Constraint PK_narudzba primary key (IDNarudzba) -- Moûe i ovako; nakon svega samo mora biti odvojeno zarezom 
+KontaktID int null, -- ovako √¶e mo√¶i biti ako Kontakt osoba nije obavezna, ne znam kako smo dogovarali!
+Constraint PK_narudzba primary key (IDNarudzba) -- Mo≈æe i ovako; nakon svega samo mora biti odvojeno zarezom 
 -- jer se ne odnosi na polje iznad nego na neko gore (bilo koje)
 );
 
@@ -57,15 +58,15 @@ KontaktID int null,
 Constraint PK_narudzbaTest1 primary key (IDNarudzba)
 , Constraint FK_KorisnikNarTest1 foreign key (KorisnikID) References Korisnik(IDKorisnik)
 );
-/* Pazi, kreirao sam novu tablicu ali sam u njoj imenovao PK i FK drugaËije jer mislim da 
-   ime kljuËa MORA BITI jedinstveno za cijelu bazu. A i da nije, nazvao bih ga drugaËije da ne doe do zabune!
+/* Pazi, kreirao sam novu tablicu ali sam u njoj imenovao PK i FK druga√®ije jer mislim da 
+   ime klju√®a MORA BITI jedinstveno za cijelu bazu. A i da nije, nazvao bih ga druga√®ije da ne do√∞e do zabune!
 */
 
 /*
-3.) **** TreÊi naËin: *****
-Moûeö mijenjati deklaraciju tablice tako da joj dodaö SAMO Foreign key!
+3.) **** Tre√¶i na√®in: *****
+Mo≈æe≈° mijenjati deklaraciju tablice tako da joj doda≈° SAMO Foreign key!
 
-ZnaËi, prvo deklariraö (CREATE) tablicu:
+Zna√®i, prvo deklarira≈° (CREATE) tablicu:
 */
 create table Narudzba_test2
 (
@@ -74,7 +75,7 @@ KorisnikID int, -- ovdje nisi odredio nikakav Constraint ali zato dole... odvoje
 KontaktID int null, 
 Constraint PK_narudzbaTest2 primary key (IDNarudzba)
 );
--- a zatim dodaö Constraint, OVAKO!:
+-- a zatim doda≈° Constraint, OVAKO!:
 Alter Table Narudzba_test2
 ADD Constraint FK_KorisnikNarTest2 foreign key (KorisnikID) References Korisnik(IDKorisnik)
 ;
